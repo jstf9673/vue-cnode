@@ -5,7 +5,8 @@
       <li v-for="item in getData">
         <a class="flex">
           <router-link tag="div" class="usr-img" :to="{name: 'usrinfo', params: {name: item.author.loginname}}">
-           <img :src="item.author.avatar_url">
+           <!-- <img :src="item.author.avatar_url"> -->
+           <img :src="formtHttp(item.author.avatar_url)">
           </router-link>
           <div class="tops" v-if="item.top">置顶</div>
           <router-link tag="div" class="topic-con" :to="{name: 'topics', params: {id: item.id}}">
@@ -19,7 +20,7 @@
   </div>
 </template>
 <script>
-  import { formateDate } from '../assets/globle'
+  import { formateDate, addHTTP } from '../assets/globle'
   import vueLoading from 'vue-loading-template'
   export default {
     name: 'dataList',
@@ -46,8 +47,12 @@
     methods: {
       routeChange () {
         this.page = 1
+        document.body.scrollTop = 0
         this.getCustomers()
         document.title = this.handleParams
+      },
+      formtHttp (str) {
+        return addHTTP(str)
       },
       createdTime (str) {
         return formateDate(str)
@@ -72,11 +77,9 @@
               this.getData.push(item)
             })
           }document.title = this.handleParams
-          setTimeout(() => {
-            this.$nextTick(() => {
-              this.loading = false
-            })
-          }, 1500)
+          this.$nextTick(() => {
+            this.loading = false
+          })
           // this.$set(this.getData, 'getData', response.data)
         })
         .catch(function (response) {

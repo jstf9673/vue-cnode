@@ -5,7 +5,7 @@
       <div class="header" :class="{'show': menuShow}">
         <div class="pull-l" @click="openMenu">menu</div>
         <div class="pull-r" @click="openSearch">search</div>
-        <h3><img src="//o4j806krb.qnssl.com/public/images/cnodejs_light.svg"></h3>
+        <h3><img src="http://o4j806krb.qnssl.com/public/images/cnodejs_light.svg"></h3>
       </div>
     </div>
     <v-search ref=search :show="conShow"></v-search>

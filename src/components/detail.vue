@@ -11,7 +11,7 @@
           <li class="" v-for="(items, index) in topicDetail.replies">
             <div class="reply_usr_info flex">
               <div class="usr_avatar">
-                <img :src="items.author.avatar_url">
+                <img :src="formtHttp(items.author.avatar_url)">
               </div>
               <div class="reply_usr_name">{{ items.author.loginname }}</div>
               <div class="reply_creattime">{{ index + 1 }}楼    {{ createdTime(items.create_at) }}</div>
@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import { formateDate } from '../assets/globle'
+import { formateDate, addHTTP } from '../assets/globle'
 import vueLoading from 'vue-loading-template'
 export default {
   name: 'details',
@@ -44,6 +44,9 @@ export default {
     createdTime (str) {
       // return String(this.topicDetail.create_at).match(/.{10}/)[0]
       return formateDate(str)
+    },
+    formtHttp (str) {
+      return addHTTP(str)
     },
     dianzan (id) {
       if (id === null) {
@@ -63,11 +66,9 @@ export default {
       .then((response) => {
         this.topicDetail = response.data.data
         document.title = this.topicDetail.title
-        setTimeout(() => {
-          this.$nextTick(() => {
-            this.loading = false
-          })
-        }, 1500)
+        this.$nextTick(() => {
+          this.loading = false
+        })
       })
       .catch(function (response) {
         console.log(JSON.stringify(response), 1)

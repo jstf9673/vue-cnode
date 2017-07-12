@@ -89,3 +89,7 @@ export let setDocumentTitle = function (title) {
     document.body.appendChild(i)
   }
 }
+
+export function addHTTP (url) {
+  return (String(url).indexOf('http') >= 0) ? url : 'http:' + url
+}
