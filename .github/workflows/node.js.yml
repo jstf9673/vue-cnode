@@ -1,0 +1,35 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# workflow名称。省略的话，默认为当前workflow文件名
+name: Node.js CI
+# 触发workflow的条件
+on:
+  push:
+  # 只有master分支发生push事件时，才会触发workflow
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+# jobs表示执行的一项或多项任务
+jobs:
+  # 任务的job_id，具体名称自定义，这里build代表打包
+  build:
+    # runs-on字段指定运行所需要的虚拟机环境。注意：这个是必填字段
+    runs-on: ubuntu-latest
+    # 用于配置当前workflow的参数
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 15.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    # steps字段指定每个job的运行步骤，可以包含一个或多个步骤，每个步骤都可以配置指定字段
+    steps:
+    - uses: actions/checkout@v2
+    # 在当前操作系统安装node
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    # 该运行的命令或者action
+    # 安装依赖、运行测试、打包
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
