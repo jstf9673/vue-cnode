@@ -28,5 +28,5 @@ npm test
 ```
  预览
   [demo](https://jstf9673.github.io/vue-cnode/dist/)
-
+	test
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
